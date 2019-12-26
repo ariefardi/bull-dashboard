@@ -206,6 +206,8 @@ button {
   border: none;
   outline: none;
 }
+.button1 {background-color: #e7e7e7; color: black;} /* Gray */
+.button2 {background-color: #008CBA;} /* Blue */
 
 button:hover {
   background: #555;

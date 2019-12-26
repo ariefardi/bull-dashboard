@@ -34,9 +34,9 @@ module.exports = {
       bullQueues = [bullQueues];
     }
 
-    bullQueues.forEach((item) => {
-      queues[item.name] = item;
-    })
+    // bullQueues.forEach((item) => {
+    //   queues[item.name] = item;
+    // })
 
     return queues
   },

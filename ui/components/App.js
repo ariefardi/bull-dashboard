@@ -12,9 +12,13 @@ export default function App({ basePath }) {
     retryJob,
     retryAll,
     cleanAllDelayed,
-    cleanAllFailed
+    cleanAllFailed,
+    changeQueue,
   } = useStore(basePath)
-
+  let queueName = ''
+  if (state.data) {
+    queueName = state.data.queues[0].name
+  }
   return (
     <>
       <Header />
@@ -23,7 +27,28 @@ export default function App({ basePath }) {
           'Loading...'
         ) : (
           <>
-            <RedisStats stats={state.data.stats} />
+            {/* <RedisStats stats={state.data.stats} /> */}
+            {state.data.redisQueues.map(value => {
+              if (queueName === parsedButton(value)) {
+                return (
+                  <button
+                    onClick={() => changeQueue(parsedButton(value))}
+                    className="button2"
+                  >
+                    {parsedButton(value)}
+                  </button>
+                )
+              } else {
+                return (
+                  <button
+                    onClick={() => changeQueue(parsedButton(value))}
+                    className="button1"
+                  >
+                    {parsedButton(value)}
+                  </button>
+                )
+              }
+            })}
             {state.data.queues.map(queue => (
               <Queue
                 queue={queue}
@@ -41,4 +66,9 @@ export default function App({ basePath }) {
       </main>
     </>
   )
+}
+
+const parsedButton = value => {
+  let split = value.split(':')
+  return split[1]
 }

@@ -44,11 +44,10 @@ const statuses = [
   'paused',
 ]
 
-module.exports = async function getDataForQeues({ queues, query = {} }) {
+module.exports = async function getDataForQeues({ queues, query = {}, redisQueues }) {
   if (isEmpty(queues)) {
-    return { stats: {}, queues: [] }
+    return { stats: {}, queues: [], redisQueues: [] }
   }
-
   const pairs = Object.entries(queues)
 
   const counts = await Promise.all(
@@ -68,7 +67,8 @@ module.exports = async function getDataForQeues({ queues, query = {} }) {
       }
     }),
   )
+  // console.log('pairs', pairs)
   const stats = await getStats(pairs[0][1])
 
-  return { stats, queues: counts }
+  return { stats, queues: counts, redisQueues }
 }
