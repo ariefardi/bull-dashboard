@@ -7,6 +7,7 @@ export default function useStore(basePath) {
   const [state, setState] = useState({
     data: null,
     loading: true,
+    checked: false,
   })
   const [selectedStatuses, setSelectedStatuses] = useState({})
 
@@ -63,6 +64,9 @@ export default function useStore(basePath) {
     fetch(`${basePath}/queues/${queueName}/clean/failed`, { method: 'put' }).then(
       update,
     )
+  const changeQueue = queueName => {
+    return fetch(`http://localhost:50001/change-redis?name=${queueName}`)
+  }
 
   return {
     state,
@@ -72,5 +76,6 @@ export default function useStore(basePath) {
     cleanAllFailed,
     selectedStatuses,
     setSelectedStatuses,
+    changeQueue,
   }
 }
